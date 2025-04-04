@@ -335,7 +335,7 @@ data:
               "showLineNumbers": false,
               "showMiniMap": false
             },
-            "content": "Number of incomplete assessments means that the assessments does not have an inventory.",
+            "content": "Number of incomplete assessments means that the assessment does not have an inventory.",
             "mode": "markdown"
           },
           "pluginVersion": "10.4.1",
@@ -410,7 +410,7 @@ data:
               "refId": "A"
             }
           ],
-          "title": "No of incomplete assesments",
+          "title": "No of incomplete assessments",
           "type": "stat"
         },
         {
@@ -1431,7 +1431,7 @@ data:
       "timezone": "browser",
       "title": "Service Dashboards",
       "uid": "deg3jpmyvl7gga",
-      "version": 2,
+      "version": 3,
       "weekStart": ""
     }
 kind: ConfigMap
