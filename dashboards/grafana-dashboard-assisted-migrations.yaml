@@ -1,6 +1,6 @@
 apiVersion: v1
 data:
-  grafana.json: |
+  am.json: |-
     {
       "annotations": {
         "list": [
@@ -21,7 +21,6 @@ data:
       "editable": true,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "id": 1001605,
       "links": [],
       "panels": [
         {
@@ -101,7 +100,7 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
-              "expr": "sum(increase(chi_requests_total{service=\"migration-planner-metrics\",code!~\"5..|0\"}[$__range]))\n/\nsum(increase(chi_requests_total{service=\"migration-planner-metrics\"}[$__range]))",
+              "expr": "sum(increase(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"api_server\",code!~\"5..|0\"}[$__range]))\n/\nsum(increase(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"api_server\"}[$__range]))",
               "legendFormat": "",
               "range": true,
               "refId": "A"
@@ -295,7 +294,7 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
-              "expr": "sum(rate(chi_requests_total{service=\"migration-planner-metrics\", code!~\"2..\"}[$__range])) / sum(rate(chi_requests_total{service=\"migration-planner-metrics\"}[$__range]))",
+              "expr": "sum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"api_server\", code!~\"2..\"}[$__range])) / sum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"api_server\"}[$__range]))",
               "legendFormat": "non 2xx",
               "range": true,
               "refId": "A"
@@ -306,7 +305,7 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
-              "expr": "sum(rate(chi_requests_total{service=\"migration-planner-metrics\", code=~\"5.0\"}[$__range])) / sum(rate(chi_requests_total{service=\"migration-planner-metrics\"}[$__range]))",
+              "expr": "sum(rate(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"api_server\",code=~\"5.0\"}[$__range])) / sum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"api_server\"}[$__range]))",
               "hide": false,
               "instant": false,
               "legendFormat": "5xx",
@@ -405,7 +404,7 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
-              "expr": "histogram_quantile(0.99, sum by (le) (rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\", code!~\"5..|0\"}[5m])))",
+              "expr": "histogram_quantile(0.99, sum by (le) (rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\", exported_service=\"api_server\",code!~\"5..|0\"}[5m])))",
               "legendFormat": "99th",
               "range": true,
               "refId": "A"
@@ -416,7 +415,7 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
-              "expr": "histogram_quantile(0.90, sum by (le) (rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\", code!~\"5..|0\"}[5m])))",
+              "expr": "histogram_quantile(0.90, sum by (le) (rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\",exported_service=\"api_server\", code!~\"5..|0\"}[5m])))",
               "hide": false,
               "instant": false,
               "legendFormat": "90th",
@@ -429,7 +428,7 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
-              "expr": "histogram_quantile(0.50, sum by (le) (rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\", code!~\"5..|0\"}[5m])))",
+              "expr": "histogram_quantile(0.50, sum by (le) (rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\",exported_service=\"api_server\", code!~\"5..|0\"}[5m])))",
               "hide": false,
               "instant": false,
               "legendFormat": "50th",
@@ -504,7 +503,7 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
-              "expr": "sum(increase(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\", code!~\"5..|0\",le=\"300\"}[$__range]))\n/\nsum(increase(chi_request_duration_milliseconds_count{service=\"migration-planner-metrics\", code!~\"5..|0\"}[$__range]))",
+              "expr": "sum(increase(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\",exported_service=\"api_server\", code!~\"5..|0\",le=\"300\"}[$__range]))\n/\nsum(increase(chi_request_duration_milliseconds_count{service=\"migration-planner-metrics\",exported_service=\"api_server\", code!~\"5..|0\"}[$__range]))",
               "legendFormat": "__auto",
               "range": true,
               "refId": "A"
@@ -1424,7 +1423,7 @@ data:
       "timezone": "browser",
       "title": "Assisted Migrations",
       "uid": "assisted-migrations-backend-id",
-      "version": 6,
+      "version": 7,
       "weekStart": ""
     }
 kind: ConfigMap
