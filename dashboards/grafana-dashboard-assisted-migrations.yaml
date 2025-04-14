@@ -24,12 +24,102 @@ data:
       "links": [],
       "panels": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${Datasource}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [
+                {
+                  "options": {
+                    "1": {
+                      "color": "red",
+                      "index": 2,
+                      "text": "1 / 3"
+                    },
+                    "2": {
+                      "color": "yellow",
+                      "index": 1,
+                      "text": "2 / 3"
+                    },
+                    "3": {
+                      "color": "green",
+                      "index": 0,
+                      "text": "3 / 3"
+                    }
+                  },
+                  "type": "value"
+                }
+              ],
+              "max": 3,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 3
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 6,
+            "w": 3,
+            "x": 0,
+            "y": 0
+          },
+          "id": 23,
+          "options": {
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto"
+          },
+          "pluginVersion": "10.4.1",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PDD8BE47D10408F45"
+              },
+              "editorMode": "code",
+              "expr": "sum(up{namespace=\"assisted-migration-stage\",service=\"migration-planner-metrics\"})",
+              "instant": false,
+              "legendFormat": "pods",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "Service Health",
+          "type": "gauge"
+        },
+        {
           "collapsed": false,
           "gridPos": {
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 0
+            "y": 6
           },
           "id": 22,
           "panels": [],
@@ -72,7 +162,7 @@ data:
             "h": 4,
             "w": 4,
             "x": 0,
-            "y": 1
+            "y": 7
           },
           "id": 17,
           "options": {
@@ -175,7 +265,7 @@ data:
             "h": 8,
             "w": 7,
             "x": 4,
-            "y": 1
+            "y": 7
           },
           "id": 19,
           "options": {
@@ -271,7 +361,7 @@ data:
             "h": 8,
             "w": 6,
             "x": 11,
-            "y": 1
+            "y": 7
           },
           "id": 20,
           "options": {
@@ -381,7 +471,7 @@ data:
             "h": 8,
             "w": 7,
             "x": 17,
-            "y": 1
+            "y": 7
           },
           "id": 21,
           "options": {
@@ -444,7 +534,7 @@ data:
             "type": "prometheus",
             "uid": "${Datasource}"
           },
-          "description": "The percentage of time that the API responds within 300ms.",
+          "description": "The percentage of time that the API responds within 1s.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -475,7 +565,7 @@ data:
             "h": 4,
             "w": 4,
             "x": 0,
-            "y": 5
+            "y": 11
           },
           "id": 18,
           "options": {
@@ -503,13 +593,13 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
-              "expr": "sum(increase(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\",exported_service=\"api_server\", code!~\"5..|0\",le=\"300\"}[$__range]))\n/\nsum(increase(chi_request_duration_milliseconds_count{service=\"migration-planner-metrics\",exported_service=\"api_server\", code!~\"5..|0\"}[$__range]))",
+              "expr": "sum(increase(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\",exported_service=\"api_server\", code!~\"5..|0\",le=\"1000\"}[$__range]))\n/\nsum(increase(chi_request_duration_milliseconds_count{service=\"migration-planner-metrics\",exported_service=\"api_server\", code!~\"5..|0\"}[$__range]))",
               "legendFormat": "__auto",
               "range": true,
               "refId": "A"
             }
           ],
-          "title": "Latency (<300ms)",
+          "title": "Latency (<1s)",
           "type": "stat"
         },
         {
@@ -518,7 +608,7 @@ data:
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 9
+            "y": 15
           },
           "id": 13,
           "panels": [],
@@ -561,7 +651,7 @@ data:
             "h": 4,
             "w": 4,
             "x": 0,
-            "y": 10
+            "y": 16
           },
           "id": 11,
           "options": {
@@ -627,7 +717,7 @@ data:
                 "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
-                "pointSize": 1,
+                "pointSize": 2,
                 "scaleDistribution": {
                   "type": "linear"
                 },
@@ -664,7 +754,7 @@ data:
             "h": 8,
             "w": 7,
             "x": 4,
-            "y": 10
+            "y": 16
           },
           "id": 14,
           "options": {
@@ -675,7 +765,7 @@ data:
               "showLegend": true
             },
             "tooltip": {
-              "mode": "single",
+              "mode": "multi",
               "sort": "none"
             }
           },
@@ -760,7 +850,7 @@ data:
             "h": 8,
             "w": 6,
             "x": 11,
-            "y": 10
+            "y": 16
           },
           "id": 15,
           "options": {
@@ -870,7 +960,7 @@ data:
             "h": 8,
             "w": 7,
             "x": 17,
-            "y": 10
+            "y": 16
           },
           "id": 16,
           "options": {
@@ -933,7 +1023,7 @@ data:
             "type": "prometheus",
             "uid": "${Datasource}"
           },
-          "description": "The percentage of time that the API responds within 300ms.",
+          "description": "The percentage of time that the API responds within 1s.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -964,7 +1054,7 @@ data:
             "h": 4,
             "w": 4,
             "x": 0,
-            "y": 14
+            "y": 20
           },
           "id": 12,
           "options": {
@@ -992,13 +1082,13 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
-              "expr": "sum(increase(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\", exported_service=\"agent_server\", code!~\"5..|0\",path!~\"/health\",le=\"300\"}[$__range]))\n/\nsum(increase(chi_request_duration_milliseconds_count{service=\"migration-planner-metrics\", exported_service=\"agent_server\", code!~\"5..|0\",path!~\"/health\"}[$__range]))",
+              "expr": "sum(increase(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\", exported_service=\"agent_server\", code!~\"5..|0\",path!~\"/health\",le=\"1000\"}[$__range]))\n/\nsum(increase(chi_request_duration_milliseconds_count{service=\"migration-planner-metrics\", exported_service=\"agent_server\", code!~\"5..|0\",path!~\"/health\"}[$__range]))",
               "legendFormat": "__auto",
               "range": true,
               "refId": "A"
             }
           ],
-          "title": "Latency (<300ms)",
+          "title": "Latency (<1s)",
           "type": "stat"
         },
         {
@@ -1007,7 +1097,7 @@ data:
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 18
+            "y": 24
           },
           "id": 2,
           "panels": [],
@@ -1046,7 +1136,7 @@ data:
             "h": 4,
             "w": 3,
             "x": 0,
-            "y": 19
+            "y": 25
           },
           "id": 3,
           "options": {
@@ -1115,7 +1205,7 @@ data:
             "h": 4,
             "w": 3,
             "x": 3,
-            "y": 19
+            "y": 25
           },
           "id": 5,
           "options": {
@@ -1218,7 +1308,7 @@ data:
             "h": 8,
             "w": 18,
             "x": 6,
-            "y": 19
+            "y": 25
           },
           "id": 1,
           "options": {
@@ -1282,7 +1372,7 @@ data:
             "h": 4,
             "w": 3,
             "x": 0,
-            "y": 23
+            "y": 29
           },
           "id": 6,
           "options": {
@@ -1351,7 +1441,7 @@ data:
             "h": 4,
             "w": 3,
             "x": 3,
-            "y": 23
+            "y": 29
           },
           "id": 4,
           "options": {
@@ -1416,14 +1506,14 @@ data:
         ]
       },
       "time": {
-        "from": "now-7d",
+        "from": "now-2d",
         "to": "now"
       },
       "timepicker": {},
       "timezone": "browser",
       "title": "Assisted Migrations",
       "uid": "assisted-migrations-backend-id",
-      "version": 7,
+      "version": 8,
       "weekStart": ""
     }
 kind: ConfigMap
