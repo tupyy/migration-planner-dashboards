@@ -74,7 +74,7 @@ data:
             "overrides": []
           },
           "gridPos": {
-            "h": 6,
+            "h": 7,
             "w": 3,
             "x": 0,
             "y": 0
@@ -114,493 +114,1372 @@ data:
           "type": "gauge"
         },
         {
-          "collapsed": false,
+          "collapsed": true,
           "gridPos": {
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 6
+            "y": 7
           },
           "id": 22,
-          "panels": [],
+          "panels": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${Datasource}"
+              },
+              "description": "The percentage of time that the API is available (not returning 500 Internal Service Errors).",
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "decimals": 0,
+                  "mappings": [],
+                  "max": 1,
+                  "min": 0,
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": null
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "percentunit"
+                },
+                "overrides": []
+              },
+              "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 0,
+                "y": 9
+              },
+              "id": 17,
+              "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "pluginVersion": "10.4.1",
+              "targets": [
+                {
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "${Datasource}"
+                  },
+                  "editorMode": "code",
+                  "expr": "sum(increase(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"api_server\",code!~\"5..|0\"}[$__range]))\n/\nsum(increase(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"api_server\"}[$__range]))",
+                  "legendFormat": "",
+                  "range": true,
+                  "refId": "A"
+                }
+              ],
+              "title": "Availability (selected time) ",
+              "type": "stat"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${Datasource}"
+              },
+              "description": "Number of requests per second based on response code",
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "drawStyle": "line",
+                    "fillOpacity": 4,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 1,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "decimals": 2,
+                  "mappings": [],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": null
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "reqps"
+                },
+                "overrides": []
+              },
+              "gridPos": {
+                "h": 8,
+                "w": 7,
+                "x": 4,
+                "y": 9
+              },
+              "id": 19,
+              "options": {
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "mode": "single",
+                  "sort": "none"
+                }
+              },
+              "pluginVersion": "11.4.0",
+              "targets": [
+                {
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "${Datasource}"
+                  },
+                  "editorMode": "code",
+                  "expr": "sum by (code) (rate(chi_requests_total{service=\"migration-planner-metrics\",path!~\"/health\"}[$__range]))",
+                  "legendFormat": "{{code}}",
+                  "range": true,
+                  "refId": "A"
+                }
+              ],
+              "title": "Requests",
+              "type": "timeseries"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${Datasource}"
+              },
+              "description": "Number of requests per second based on response code",
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "drawStyle": "line",
+                    "fillOpacity": 4,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 1,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "mappings": [],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": null
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "gridPos": {
+                "h": 8,
+                "w": 6,
+                "x": 11,
+                "y": 9
+              },
+              "id": 20,
+              "options": {
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "mode": "single",
+                  "sort": "none"
+                }
+              },
+              "pluginVersion": "11.4.0",
+              "targets": [
+                {
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "${Datasource}"
+                  },
+                  "editorMode": "code",
+                  "expr": "sum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"api_server\", code!~\"2..\"}[$__range])) / sum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"api_server\"}[$__range]))",
+                  "legendFormat": "non 2xx",
+                  "range": true,
+                  "refId": "A"
+                },
+                {
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "${Datasource}"
+                  },
+                  "editorMode": "code",
+                  "expr": "sum(rate(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"api_server\",code=~\"5.0\"}[$__range])) / sum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"api_server\"}[$__range]))",
+                  "hide": false,
+                  "instant": false,
+                  "legendFormat": "5xx",
+                  "range": true,
+                  "refId": "B"
+                }
+              ],
+              "title": "Errors",
+              "type": "timeseries"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${Datasource}"
+              },
+              "description": "The request duration within which the API have served 99%, 95%, 50% of requests",
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "drawStyle": "line",
+                    "fillOpacity": 4,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 1,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "mappings": [],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": null
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "ms"
+                },
+                "overrides": []
+              },
+              "gridPos": {
+                "h": 8,
+                "w": 7,
+                "x": 17,
+                "y": 9
+              },
+              "id": 21,
+              "options": {
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "mode": "multi",
+                  "sort": "desc"
+                }
+              },
+              "pluginVersion": "11.4.0",
+              "targets": [
+                {
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "${Datasource}"
+                  },
+                  "editorMode": "code",
+                  "expr": "histogram_quantile(0.99, sum by (le) (rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\", exported_service=\"api_server\",code!~\"5..|0\"}[5m])))",
+                  "legendFormat": "99th",
+                  "range": true,
+                  "refId": "A"
+                },
+                {
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "${Datasource}"
+                  },
+                  "editorMode": "code",
+                  "expr": "histogram_quantile(0.90, sum by (le) (rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\",exported_service=\"api_server\", code!~\"5..|0\"}[5m])))",
+                  "hide": false,
+                  "instant": false,
+                  "legendFormat": "90th",
+                  "range": true,
+                  "refId": "B"
+                },
+                {
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "${Datasource}"
+                  },
+                  "editorMode": "code",
+                  "expr": "histogram_quantile(0.50, sum by (le) (rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\",exported_service=\"api_server\", code!~\"5..|0\"}[5m])))",
+                  "hide": false,
+                  "instant": false,
+                  "legendFormat": "50th",
+                  "range": true,
+                  "refId": "C"
+                }
+              ],
+              "title": "Duration",
+              "type": "timeseries"
+            }
+          ],
           "title": "API overall",
           "type": "row"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${Datasource}"
-          },
-          "description": "The percentage of time that the API is available (not returning 500 Internal Service Errors).",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "decimals": 0,
-              "mappings": [],
-              "max": 1,
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "percentunit"
-            },
-            "overrides": []
-          },
+          "collapsed": true,
           "gridPos": {
-            "h": 4,
-            "w": 4,
+            "h": 1,
+            "w": 24,
             "x": 0,
-            "y": 7
+            "y": 8
           },
-          "id": 17,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "none",
-            "justifyMode": "auto",
-            "orientation": "auto",
-            "percentChangeColorMode": "standard",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
+          "id": 13,
+          "panels": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${Datasource}"
+              },
+              "description": "The percentage of time that the API responds within 1s.",
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "decimals": 0,
+                  "mappings": [],
+                  "max": 1,
+                  "min": 0,
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": null
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "percentunit"
+                },
+                "overrides": []
+              },
+              "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 0,
+                "y": 10
+              },
+              "id": 18,
+              "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "pluginVersion": "10.4.1",
+              "targets": [
+                {
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "${Datasource}"
+                  },
+                  "editorMode": "code",
+                  "expr": "sum(increase(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\",exported_service=\"api_server\", code!~\"5..|0\",le=\"1000\"}[$__range]))\n/\nsum(increase(chi_request_duration_milliseconds_count{service=\"migration-planner-metrics\",exported_service=\"api_server\", code!~\"5..|0\"}[$__range]))",
+                  "legendFormat": "__auto",
+                  "range": true,
+                  "refId": "A"
+                }
               ],
-              "fields": "",
-              "values": false
+              "title": "Latency (<1s)",
+              "type": "stat"
             },
-            "showPercentChange": false,
-            "textMode": "auto",
-            "wideLayout": true
-          },
-          "pluginVersion": "10.4.1",
-          "targets": [
             {
               "datasource": {
                 "type": "prometheus",
                 "uid": "${Datasource}"
               },
-              "editorMode": "code",
-              "expr": "sum(increase(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"api_server\",code!~\"5..|0\"}[$__range]))\n/\nsum(increase(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"api_server\"}[$__range]))",
-              "legendFormat": "",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Availability (selected time) ",
-          "type": "stat"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${Datasource}"
-          },
-          "description": "Number of requests per second based on response code",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
+              "description": "Number of requests per second based on response code",
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "drawStyle": "line",
+                    "fillOpacity": 4,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 2,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "decimals": 2,
+                  "mappings": [],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": null
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "reqps"
+                },
+                "overrides": []
               },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 4,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
+              "gridPos": {
+                "h": 8,
+                "w": 7,
+                "x": 4,
+                "y": 10
+              },
+              "id": 14,
+              "options": {
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
                 },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 1,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
+                "tooltip": {
+                  "mode": "multi",
+                  "sort": "none"
                 }
               },
-              "decimals": 2,
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
+              "pluginVersion": "11.4.0",
+              "targets": [
+                {
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "${Datasource}"
                   },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "reqps"
+                  "editorMode": "code",
+                  "expr": "sum by (code) (rate(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"agent_server\",path!~\"/health\"}[$__range]))",
+                  "legendFormat": "{{code}}",
+                  "range": true,
+                  "refId": "A"
+                }
+              ],
+              "title": "Requests",
+              "type": "timeseries"
             },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 7,
-            "x": 4,
-            "y": 7
-          },
-          "id": 19,
-          "options": {
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "pluginVersion": "11.4.0",
-          "targets": [
             {
               "datasource": {
                 "type": "prometheus",
                 "uid": "${Datasource}"
               },
-              "editorMode": "code",
-              "expr": "sum by (code) (rate(chi_requests_total{service=\"migration-planner-metrics\",path!~\"/health\"}[$__range]))",
-              "legendFormat": "{{code}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Requests",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${Datasource}"
-          },
-          "description": "Number of requests per second based on response code",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
+              "description": "Number of requests per second based on response code",
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "drawStyle": "line",
+                    "fillOpacity": 4,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 1,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "mappings": [],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": null
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
               },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 4,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
+              "gridPos": {
+                "h": 8,
+                "w": 6,
+                "x": 11,
+                "y": 10
+              },
+              "id": 15,
+              "options": {
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
                 },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 1,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
+                "tooltip": {
+                  "mode": "single",
+                  "sort": "none"
                 }
               },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
+              "pluginVersion": "11.4.0",
+              "targets": [
+                {
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "${Datasource}"
                   },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 6,
-            "x": 11,
-            "y": 7
-          },
-          "id": 20,
-          "options": {
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "pluginVersion": "11.4.0",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${Datasource}"
-              },
-              "editorMode": "code",
-              "expr": "sum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"api_server\", code!~\"2..\"}[$__range])) / sum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"api_server\"}[$__range]))",
-              "legendFormat": "non 2xx",
-              "range": true,
-              "refId": "A"
+                  "editorMode": "code",
+                  "expr": "sum(rate(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"agent_server\",path!~\"/health\", code!~\"2..\"}[$__range])) / sum(rate(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"agent_server\",path!~\"/health\"}[$__range]))",
+                  "legendFormat": "non 2xx",
+                  "range": true,
+                  "refId": "A"
+                },
+                {
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "${Datasource}"
+                  },
+                  "editorMode": "code",
+                  "expr": "sum(rate(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"agent_server\",path!~\"/health\", code=~\"5..0\"}[$__range])) / sum(rate(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"agent_server\",path!~\"/health\"}[$__range]))",
+                  "hide": false,
+                  "instant": false,
+                  "legendFormat": "5xx",
+                  "range": true,
+                  "refId": "B"
+                }
+              ],
+              "title": "Errors",
+              "type": "timeseries"
             },
             {
               "datasource": {
                 "type": "prometheus",
                 "uid": "${Datasource}"
               },
-              "editorMode": "code",
-              "expr": "sum(rate(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"api_server\",code=~\"5.0\"}[$__range])) / sum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"api_server\"}[$__range]))",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "5xx",
-              "range": true,
-              "refId": "B"
-            }
-          ],
-          "title": "Errors",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${Datasource}"
-          },
-          "description": "The request duration within which the API have served 99%, 95%, 50% of requests",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
+              "description": "The request duration within which the API have served 99%, 95%, 50% of requests",
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "drawStyle": "line",
+                    "fillOpacity": 4,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "linear",
+                    "lineWidth": 1,
+                    "pointSize": 1,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "mappings": [],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": null
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "ms"
+                },
+                "overrides": []
               },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 4,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
+              "gridPos": {
+                "h": 8,
+                "w": 7,
+                "x": 17,
+                "y": 10
+              },
+              "id": 16,
+              "options": {
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
                 },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 1,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
+                "tooltip": {
+                  "mode": "multi",
+                  "sort": "desc"
                 }
               },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
+              "pluginVersion": "11.4.0",
+              "targets": [
+                {
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "${Datasource}"
                   },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "ms"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 7,
-            "x": 17,
-            "y": 7
-          },
-          "id": 21,
-          "options": {
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "multi",
-              "sort": "desc"
-            }
-          },
-          "pluginVersion": "11.4.0",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${Datasource}"
-              },
-              "editorMode": "code",
-              "expr": "histogram_quantile(0.99, sum by (le) (rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\", exported_service=\"api_server\",code!~\"5..|0\"}[5m])))",
-              "legendFormat": "99th",
-              "range": true,
-              "refId": "A"
+                  "editorMode": "code",
+                  "expr": "histogram_quantile(0.99, sum by (le) (rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\", exported_service=\"agent_server\", code!~\"5..|0\"}[5m])))",
+                  "legendFormat": "99th",
+                  "range": true,
+                  "refId": "A"
+                },
+                {
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "${Datasource}"
+                  },
+                  "editorMode": "code",
+                  "expr": "histogram_quantile(0.90, sum by (le) (rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\", exported_service=\"agent_server\", code!~\"5..|0\"}[5m])))",
+                  "hide": false,
+                  "instant": false,
+                  "legendFormat": "90th",
+                  "range": true,
+                  "refId": "B"
+                },
+                {
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "${Datasource}"
+                  },
+                  "editorMode": "code",
+                  "expr": "histogram_quantile(0.50, sum by (le) (rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\", exported_service=\"agent_server\", code!~\"5..|0\"}[5m])))",
+                  "hide": false,
+                  "instant": false,
+                  "legendFormat": "50th",
+                  "range": true,
+                  "refId": "C"
+                }
+              ],
+              "title": "Duration",
+              "type": "timeseries"
             },
             {
               "datasource": {
                 "type": "prometheus",
                 "uid": "${Datasource}"
               },
-              "editorMode": "code",
-              "expr": "histogram_quantile(0.90, sum by (le) (rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\",exported_service=\"api_server\", code!~\"5..|0\"}[5m])))",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "90th",
-              "range": true,
-              "refId": "B"
+              "description": "The percentage of time that the API is available (not returning 500 Internal Service Errors).",
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "decimals": 0,
+                  "mappings": [],
+                  "max": 1,
+                  "min": 0,
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": null
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "percentunit"
+                },
+                "overrides": []
+              },
+              "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 0,
+                "y": 14
+              },
+              "id": 11,
+              "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "pluginVersion": "10.4.1",
+              "targets": [
+                {
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "${Datasource}"
+                  },
+                  "editorMode": "code",
+                  "expr": "sum(increase(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"agent_server\",code!~\"5..|0\",path!~\"/health\"}[$__range]))\n/\nsum(increase(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"agent_server\",path!~\"/health\"}[$__range]))",
+                  "legendFormat": "",
+                  "range": true,
+                  "refId": "A"
+                }
+              ],
+              "title": "Availability (selected time) ",
+              "type": "stat"
             },
             {
               "datasource": {
                 "type": "prometheus",
                 "uid": "${Datasource}"
               },
-              "editorMode": "code",
-              "expr": "histogram_quantile(0.50, sum by (le) (rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\",exported_service=\"api_server\", code!~\"5..|0\"}[5m])))",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "50th",
-              "range": true,
-              "refId": "C"
+              "description": "The percentage of time that the API responds within 1s.",
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "decimals": 0,
+                  "mappings": [],
+                  "max": 1,
+                  "min": 0,
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": null
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  },
+                  "unit": "percentunit"
+                },
+                "overrides": []
+              },
+              "gridPos": {
+                "h": 4,
+                "w": 4,
+                "x": 0,
+                "y": 18
+              },
+              "id": 12,
+              "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "pluginVersion": "10.4.1",
+              "targets": [
+                {
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "${Datasource}"
+                  },
+                  "editorMode": "code",
+                  "expr": "sum(increase(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\", exported_service=\"agent_server\", code!~\"5..|0\",path!~\"/health\",le=\"1000\"}[$__range]))\n/\nsum(increase(chi_request_duration_milliseconds_count{service=\"migration-planner-metrics\", exported_service=\"agent_server\", code!~\"5..|0\",path!~\"/health\"}[$__range]))",
+                  "legendFormat": "__auto",
+                  "range": true,
+                  "refId": "A"
+                }
+              ],
+              "title": "Latency (<1s)",
+              "type": "stat"
             }
           ],
-          "title": "Duration",
-          "type": "timeseries"
+          "title": "Agent API overall",
+          "type": "row"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${Datasource}"
-          },
-          "description": "The percentage of time that the API responds within 1s.",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "decimals": 0,
-              "mappings": [],
-              "max": 1,
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "percentunit"
-            },
-            "overrides": []
-          },
+          "collapsed": true,
           "gridPos": {
-            "h": 4,
-            "w": 4,
+            "h": 1,
+            "w": 24,
             "x": 0,
-            "y": 11
+            "y": 9
           },
-          "id": 18,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "none",
-            "justifyMode": "auto",
-            "orientation": "auto",
-            "percentChangeColorMode": "standard",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showPercentChange": false,
-            "textMode": "auto",
-            "wideLayout": true
-          },
-          "pluginVersion": "10.4.1",
-          "targets": [
+          "id": 2,
+          "panels": [
             {
               "datasource": {
                 "type": "prometheus",
                 "uid": "${Datasource}"
               },
-              "editorMode": "code",
-              "expr": "sum(increase(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\",exported_service=\"api_server\", code!~\"5..|0\",le=\"1000\"}[$__range]))\n/\nsum(increase(chi_request_duration_milliseconds_count{service=\"migration-planner-metrics\",exported_service=\"api_server\", code!~\"5..|0\"}[$__range]))",
-              "legendFormat": "__auto",
-              "range": true,
-              "refId": "A"
+              "description": "Current number of agents in up-to-date state",
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "mappings": [],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": null
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "gridPos": {
+                "h": 4,
+                "w": 3,
+                "x": 0,
+                "y": 11
+              },
+              "id": 3,
+              "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "pluginVersion": "10.4.1",
+              "targets": [
+                {
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "${Datasource}"
+                  },
+                  "editorMode": "code",
+                  "expr": "max by (service) (assisted_migration_agent_status_count{state=\"up-to-date\",service=\"migration-planner-metrics\"})",
+                  "legendFormat": "{{state}}",
+                  "range": true,
+                  "refId": "A"
+                }
+              ],
+              "title": "Agents in up-to-date state",
+              "type": "stat"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${Datasource}"
+              },
+              "description": "Current number of agents in gathering-inventory state",
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "mappings": [],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": null
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "gridPos": {
+                "h": 4,
+                "w": 3,
+                "x": 3,
+                "y": 11
+              },
+              "id": 5,
+              "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "text": {
+                  "titleSize": 20
+                },
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "pluginVersion": "10.4.1",
+              "targets": [
+                {
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "${Datasource}"
+                  },
+                  "editorMode": "code",
+                  "expr": "max by (service) (assisted_migration_agent_status_count{state=\"gathering-initial-inventory\", service=\"migration-planner-metrics\"})",
+                  "legendFormat": "__auto",
+                  "range": true,
+                  "refId": "A"
+                }
+              ],
+              "title": "Agents in gathering-inventory state",
+              "type": "stat"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${Datasource}"
+              },
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "palette-classic"
+                  },
+                  "custom": {
+                    "axisBorderShow": false,
+                    "axisCenteredZero": false,
+                    "axisColorMode": "text",
+                    "axisLabel": "",
+                    "axisPlacement": "auto",
+                    "barAlignment": 0,
+                    "drawStyle": "line",
+                    "fillOpacity": 3,
+                    "gradientMode": "none",
+                    "hideFrom": {
+                      "legend": false,
+                      "tooltip": false,
+                      "viz": false
+                    },
+                    "insertNulls": false,
+                    "lineInterpolation": "smooth",
+                    "lineWidth": 1,
+                    "pointSize": 1,
+                    "scaleDistribution": {
+                      "type": "linear"
+                    },
+                    "showPoints": "auto",
+                    "spanNulls": false,
+                    "stacking": {
+                      "group": "A",
+                      "mode": "none"
+                    },
+                    "thresholdsStyle": {
+                      "mode": "off"
+                    }
+                  },
+                  "mappings": [],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": null
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "gridPos": {
+                "h": 8,
+                "w": 18,
+                "x": 6,
+                "y": 11
+              },
+              "id": 1,
+              "options": {
+                "legend": {
+                  "calcs": [],
+                  "displayMode": "list",
+                  "placement": "bottom",
+                  "showLegend": true
+                },
+                "tooltip": {
+                  "mode": "multi",
+                  "sort": "desc"
+                }
+              },
+              "pluginVersion": "11.4.0",
+              "targets": [
+                {
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "${Datasource}"
+                  },
+                  "editorMode": "code",
+                  "expr": "max by (state) (assisted_migration_agent_status_count{service=\"migration-planner-metrics\", state!=\"\"})",
+                  "legendFormat": "{{state}}",
+                  "range": true,
+                  "refId": "A"
+                }
+              ],
+              "title": "Histograme of agents' states",
+              "type": "timeseries"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${Datasource}"
+              },
+              "description": "Current number of agents in waiting-for-credential state",
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "mappings": [],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": null
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "gridPos": {
+                "h": 4,
+                "w": 3,
+                "x": 0,
+                "y": 15
+              },
+              "id": 6,
+              "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "pluginVersion": "10.4.1",
+              "targets": [
+                {
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "${Datasource}"
+                  },
+                  "editorMode": "code",
+                  "expr": "max by (service) (assisted_migration_agent_status_count{state=\"waiting-for-credentials\", service=\"migration-planner-metrics\"})",
+                  "legendFormat": "__auto",
+                  "range": true,
+                  "refId": "A"
+                }
+              ],
+              "title": "Agents in waiting-for-credential state",
+              "type": "stat"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${Datasource}"
+              },
+              "description": "Current number of agents in error state",
+              "fieldConfig": {
+                "defaults": {
+                  "color": {
+                    "mode": "thresholds"
+                  },
+                  "mappings": [],
+                  "thresholds": {
+                    "mode": "absolute",
+                    "steps": [
+                      {
+                        "color": "green",
+                        "value": null
+                      },
+                      {
+                        "color": "red",
+                        "value": 80
+                      }
+                    ]
+                  }
+                },
+                "overrides": []
+              },
+              "gridPos": {
+                "h": 4,
+                "w": 3,
+                "x": 3,
+                "y": 15
+              },
+              "id": 4,
+              "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                  "calcs": [
+                    "lastNotNull"
+                  ],
+                  "fields": "",
+                  "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+              },
+              "pluginVersion": "10.4.1",
+              "targets": [
+                {
+                  "datasource": {
+                    "type": "prometheus",
+                    "uid": "${Datasource}"
+                  },
+                  "editorMode": "code",
+                  "expr": "max by (service) (assisted_migration_agent_status_count{state=\"error\", service=\"migration-planner-metrics\"})",
+                  "legendFormat": "__auto",
+                  "range": true,
+                  "refId": "A"
+                }
+              ],
+              "title": "Agents in error state",
+              "type": "stat"
             }
           ],
-          "title": "Latency (<1s)",
-          "type": "stat"
+          "title": "Agent metrics",
+          "type": "row"
         },
         {
           "collapsed": false,
@@ -608,11 +1487,11 @@ data:
             "h": 1,
             "w": 24,
             "x": 0,
-            "y": 15
+            "y": 10
           },
-          "id": 13,
+          "id": 26,
           "panels": [],
-          "title": "Agent API overall",
+          "title": "Resources",
           "type": "row"
         },
         {
@@ -620,80 +1499,6 @@ data:
             "type": "prometheus",
             "uid": "${Datasource}"
           },
-          "description": "The percentage of time that the API is available (not returning 500 Internal Service Errors).",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "decimals": 0,
-              "mappings": [],
-              "max": 1,
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "percentunit"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 4,
-            "w": 4,
-            "x": 0,
-            "y": 16
-          },
-          "id": 11,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "none",
-            "justifyMode": "auto",
-            "orientation": "auto",
-            "percentChangeColorMode": "standard",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showPercentChange": false,
-            "textMode": "auto",
-            "wideLayout": true
-          },
-          "pluginVersion": "10.4.1",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${Datasource}"
-              },
-              "editorMode": "code",
-              "expr": "sum(increase(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"agent_server\",code!~\"5..|0\",path!~\"/health\"}[$__range]))\n/\nsum(increase(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"agent_server\",path!~\"/health\"}[$__range]))",
-              "legendFormat": "",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Availability (selected time) ",
-          "type": "stat"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${Datasource}"
-          },
-          "description": "Number of requests per second based on response code",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -707,7 +1512,7 @@ data:
                 "axisPlacement": "auto",
                 "barAlignment": 0,
                 "drawStyle": "line",
-                "fillOpacity": 4,
+                "fillOpacity": 5,
                 "gradientMode": "none",
                 "hideFrom": {
                   "legend": false,
@@ -746,22 +1551,25 @@ data:
                   }
                 ]
               },
-              "unit": "reqps"
+              "unit": "percentunit"
             },
             "overrides": []
           },
           "gridPos": {
-            "h": 8,
-            "w": 7,
-            "x": 4,
-            "y": 16
+            "h": 11,
+            "w": 12,
+            "x": 0,
+            "y": 11
           },
-          "id": 14,
+          "id": 25,
           "options": {
             "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
+              "calcs": [
+                "lastNotNull",
+                "max"
+              ],
+              "displayMode": "table",
+              "placement": "right",
               "showLegend": true
             },
             "tooltip": {
@@ -769,21 +1577,21 @@ data:
               "sort": "none"
             }
           },
-          "pluginVersion": "11.4.0",
           "targets": [
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${Datasource}"
+                "uid": "PDD8BE47D10408F45"
               },
               "editorMode": "code",
-              "expr": "sum by (code) (rate(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"agent_server\",path!~\"/health\"}[$__range]))",
-              "legendFormat": "{{code}}",
+              "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"assisted-migration-stage\"}[5m])) by (pod) / sum(kube_pod_container_resource_limits{namespace=\"assisted-migration-stage\", resource=\"cpu\"}) by (pod)",
+              "instant": false,
+              "legendFormat": "__auto",
               "range": true,
               "refId": "A"
             }
           ],
-          "title": "Requests",
+          "title": "Cpu usage by pod",
           "type": "timeseries"
         },
         {
@@ -791,7 +1599,6 @@ data:
             "type": "prometheus",
             "uid": "${Datasource}"
           },
-          "description": "Number of requests per second based on response code",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -805,7 +1612,7 @@ data:
                 "axisPlacement": "auto",
                 "barAlignment": 0,
                 "drawStyle": "line",
-                "fillOpacity": 4,
+                "fillOpacity": 5,
                 "gradientMode": "none",
                 "hideFrom": {
                   "legend": false,
@@ -815,7 +1622,7 @@ data:
                 "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
-                "pointSize": 1,
+                "pointSize": 2,
                 "scaleDistribution": {
                   "type": "linear"
                 },
@@ -830,209 +1637,6 @@ data:
                 }
               },
               "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 6,
-            "x": 11,
-            "y": 16
-          },
-          "id": 15,
-          "options": {
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "pluginVersion": "11.4.0",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${Datasource}"
-              },
-              "editorMode": "code",
-              "expr": "sum(rate(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"agent_server\",path!~\"/health\", code!~\"2..\"}[$__range])) / sum(rate(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"agent_server\",path!~\"/health\"}[$__range]))",
-              "legendFormat": "non 2xx",
-              "range": true,
-              "refId": "A"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${Datasource}"
-              },
-              "editorMode": "code",
-              "expr": "sum(rate(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"agent_server\",path!~\"/health\", code=~\"5..0\"}[$__range])) / sum(rate(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"agent_server\",path!~\"/health\"}[$__range]))",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "5xx",
-              "range": true,
-              "refId": "B"
-            }
-          ],
-          "title": "Errors",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${Datasource}"
-          },
-          "description": "The request duration within which the API have served 99%, 95%, 50% of requests",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 4,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 1,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "ms"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 7,
-            "x": 17,
-            "y": 16
-          },
-          "id": 16,
-          "options": {
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "multi",
-              "sort": "desc"
-            }
-          },
-          "pluginVersion": "11.4.0",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${Datasource}"
-              },
-              "editorMode": "code",
-              "expr": "histogram_quantile(0.99, sum by (le) (rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\", exported_service=\"agent_server\", code!~\"5..|0\"}[5m])))",
-              "legendFormat": "99th",
-              "range": true,
-              "refId": "A"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${Datasource}"
-              },
-              "editorMode": "code",
-              "expr": "histogram_quantile(0.90, sum by (le) (rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\", exported_service=\"agent_server\", code!~\"5..|0\"}[5m])))",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "90th",
-              "range": true,
-              "refId": "B"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${Datasource}"
-              },
-              "editorMode": "code",
-              "expr": "histogram_quantile(0.50, sum by (le) (rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\", exported_service=\"agent_server\", code!~\"5..|0\"}[5m])))",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "50th",
-              "range": true,
-              "refId": "C"
-            }
-          ],
-          "title": "Duration",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${Datasource}"
-          },
-          "description": "The percentage of time that the API responds within 1s.",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "decimals": 0,
-              "mappings": [],
-              "max": 1,
-              "min": 0,
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
@@ -1051,432 +1655,43 @@ data:
             "overrides": []
           },
           "gridPos": {
-            "h": 4,
-            "w": 4,
-            "x": 0,
-            "y": 20
+            "h": 11,
+            "w": 12,
+            "x": 12,
+            "y": 11
           },
-          "id": 12,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "none",
-            "justifyMode": "auto",
-            "orientation": "auto",
-            "percentChangeColorMode": "standard",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showPercentChange": false,
-            "textMode": "auto",
-            "wideLayout": true
-          },
-          "pluginVersion": "10.4.1",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${Datasource}"
-              },
-              "editorMode": "code",
-              "expr": "sum(increase(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\", exported_service=\"agent_server\", code!~\"5..|0\",path!~\"/health\",le=\"1000\"}[$__range]))\n/\nsum(increase(chi_request_duration_milliseconds_count{service=\"migration-planner-metrics\", exported_service=\"agent_server\", code!~\"5..|0\",path!~\"/health\"}[$__range]))",
-              "legendFormat": "__auto",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Latency (<1s)",
-          "type": "stat"
-        },
-        {
-          "collapsed": false,
-          "gridPos": {
-            "h": 1,
-            "w": 24,
-            "x": 0,
-            "y": 24
-          },
-          "id": 2,
-          "panels": [],
-          "title": "Agent metrics",
-          "type": "row"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${Datasource}"
-          },
-          "description": "Current number of agents in up-to-date state",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 4,
-            "w": 3,
-            "x": 0,
-            "y": 25
-          },
-          "id": 3,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "none",
-            "justifyMode": "auto",
-            "orientation": "auto",
-            "percentChangeColorMode": "standard",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showPercentChange": false,
-            "textMode": "auto",
-            "wideLayout": true
-          },
-          "pluginVersion": "10.4.1",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${Datasource}"
-              },
-              "editorMode": "code",
-              "expr": "max by (service) (assisted_migration_agent_status_count{state=\"up-to-date\",service=\"migration-planner-metrics\"})",
-              "legendFormat": "{{state}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Agents in up-to-date state",
-          "type": "stat"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${Datasource}"
-          },
-          "description": "Current number of agents in gathering-inventory state",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 4,
-            "w": 3,
-            "x": 3,
-            "y": 25
-          },
-          "id": 5,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "none",
-            "justifyMode": "auto",
-            "orientation": "auto",
-            "percentChangeColorMode": "standard",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showPercentChange": false,
-            "text": {
-              "titleSize": 20
-            },
-            "textMode": "auto",
-            "wideLayout": true
-          },
-          "pluginVersion": "10.4.1",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${Datasource}"
-              },
-              "editorMode": "code",
-              "expr": "max by (service) (assisted_migration_agent_status_count{state=\"gathering-initial-inventory\", service=\"migration-planner-metrics\"})",
-              "legendFormat": "__auto",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Agents in gathering-inventory state",
-          "type": "stat"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${Datasource}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 3,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "smooth",
-                "lineWidth": 1,
-                "pointSize": 1,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 18,
-            "x": 6,
-            "y": 25
-          },
-          "id": 1,
+          "id": 24,
           "options": {
             "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
+              "calcs": [
+                "lastNotNull",
+                "max"
+              ],
+              "displayMode": "table",
+              "placement": "right",
               "showLegend": true
             },
             "tooltip": {
-              "mode": "multi",
-              "sort": "desc"
+              "mode": "single",
+              "sort": "none"
             }
           },
-          "pluginVersion": "11.4.0",
           "targets": [
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${Datasource}"
+                "uid": "PDD8BE47D10408F45"
               },
               "editorMode": "code",
-              "expr": "max by (state) (assisted_migration_agent_status_count{service=\"migration-planner-metrics\", state!=\"\"})",
-              "legendFormat": "{{state}}",
+              "expr": "sum(avg_over_time(container_memory_working_set_bytes{namespace=\"assisted-migration-stage\", pod=~\"migration-planner.*\"}[10m])) by (pod) / sum(kube_pod_container_resource_limits{resource=\"memory\", namespace=\"assisted-migration-stage\"}) by (pod)",
+              "instant": false,
+              "legendFormat": "__auto",
               "range": true,
               "refId": "A"
             }
           ],
-          "title": "Histograme of agents' states",
+          "title": "Memory consumption by pod",
           "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${Datasource}"
-          },
-          "description": "Current number of agents in waiting-for-credential state",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 4,
-            "w": 3,
-            "x": 0,
-            "y": 29
-          },
-          "id": 6,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "none",
-            "justifyMode": "auto",
-            "orientation": "auto",
-            "percentChangeColorMode": "standard",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showPercentChange": false,
-            "textMode": "auto",
-            "wideLayout": true
-          },
-          "pluginVersion": "10.4.1",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${Datasource}"
-              },
-              "editorMode": "code",
-              "expr": "max by (service) (assisted_migration_agent_status_count{state=\"waiting-for-credentials\", service=\"migration-planner-metrics\"})",
-              "legendFormat": "__auto",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Agents in waiting-for-credential state",
-          "type": "stat"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${Datasource}"
-          },
-          "description": "Current number of agents in error state",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 4,
-            "w": 3,
-            "x": 3,
-            "y": 29
-          },
-          "id": 4,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "none",
-            "justifyMode": "auto",
-            "orientation": "auto",
-            "percentChangeColorMode": "standard",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showPercentChange": false,
-            "textMode": "auto",
-            "wideLayout": true
-          },
-          "pluginVersion": "10.4.1",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${Datasource}"
-              },
-              "editorMode": "code",
-              "expr": "max by (service) (assisted_migration_agent_status_count{state=\"error\", service=\"migration-planner-metrics\"})",
-              "legendFormat": "__auto",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Agents in error state",
-          "type": "stat"
         }
       ],
       "refresh": "30s",
