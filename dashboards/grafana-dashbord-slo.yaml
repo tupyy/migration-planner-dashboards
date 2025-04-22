@@ -1,0 +1,1556 @@
+apiVersion: v1
+data:
+  slo.json: |-
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": {
+              "type": "grafana",
+              "uid": "-- Grafana --"
+            },
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+          }
+        ]
+      },
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 0,
+      "id": 1004098,
+      "links": [],
+      "panels": [
+        {
+          "collapsed": false,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 0
+          },
+          "id": 15,
+          "panels": [],
+          "repeat": "exported_service",
+          "repeatDirection": "h",
+          "title": "${exported_service} API availability",
+          "type": "row"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PD776AFABBE26000A"
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 4,
+            "x": 0,
+            "y": 1
+          },
+          "id": 3,
+          "options": {
+            "code": {
+              "language": "plaintext",
+              "showLineNumbers": false,
+              "showMiniMap": false
+            },
+            "content": "SLO Definition\n\nOver a 28-day rolling window, 99% of successful requests (defined as those receiving a non-5xx HTTP response) to ${exported_service} APIs are measured",
+            "mode": "markdown"
+          },
+          "pluginVersion": "10.4.1",
+          "title": "${exported_service} Availability",
+          "type": "text"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDD8BE47D10408F45"
+          },
+          "description": "The percentage of time that the API is available (not returning 500 Internal Service Errors).",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 0.99
+                  }
+                ]
+              },
+              "unit": "percentunit"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 7,
+            "x": 4,
+            "y": 1
+          },
+          "id": 1,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": true,
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "10.4.1",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PDD8BE47D10408F45"
+              },
+              "editorMode": "code",
+              "expr": "sum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\",code!~\"5..|0\", path!=\"/health\"}[$__range]))\n/\nsum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\",path!=\"/health\"}[$__range]))",
+              "instant": false,
+              "legendFormat": "__auto",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "availability",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDD8BE47D10408F45"
+          },
+          "description": "The percentage of time that the API is available (not returning 500 Internal Service Errors).",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "#EAB839",
+                    "value": 0.75
+                  },
+                  {
+                    "color": "red",
+                    "value": 0.9
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 7,
+            "x": 11,
+            "y": 1
+          },
+          "id": 16,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "10.4.1",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PDD8BE47D10408F45"
+              },
+              "editorMode": "code",
+              "expr": "(1 - sum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\",code!~\"5..|0\", path!=\"/health\"}[$__range]))\n/\nsum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\",path!=\"/health\"}[$__range]))) / (1 - 0.99)",
+              "instant": false,
+              "legendFormat": "Error budget burn rate",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "Availability - Error Budget Burn Rate (28d)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDD8BE47D10408F45"
+          },
+          "description": "An error budget is the maximum amount errors that a technical system can fail without ",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "mappings": [],
+              "max": 1,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 0.8
+                  }
+                ]
+              },
+              "unit": "percentunit"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 18,
+            "y": 1
+          },
+          "id": 12,
+          "options": {
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto"
+          },
+          "pluginVersion": "10.4.1",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PDD8BE47D10408F45"
+              },
+              "editorMode": "code",
+              "expr": "(1 - sum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\",code!~\"5..|0\", path !=\"/health\"}[$__range]))\n/\nsum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\",path !=\"/health\"}[$__range])))\n/\n(1 - 0.99)",
+              "instant": false,
+              "legendFormat": "__auto",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "Error Budget Exhaustion 99%",
+          "type": "gauge"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDD8BE47D10408F45"
+          },
+          "description": "Page if the burn rate over the last 5 minutes and last 1 hour remains at 13.44 or greater for at least 5 minutes without restoration.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "axisSoftMax": 16.8,
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "dashed+area"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 13.44
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 5,
+            "x": 4,
+            "y": 6
+          },
+          "id": 17,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PDD8BE47D10408F45"
+              },
+              "editorMode": "code",
+              "expr": "(1 - sum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\",code!~\"5..|0\", path!=\"/health\"}[5m]))\n/\nsum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\", path!=\"/health\"}[5m]))) / (1 - 0.99)",
+              "instant": false,
+              "legendFormat": "Burn Rate - 5m",
+              "range": true,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PDD8BE47D10408F45"
+              },
+              "editorMode": "code",
+              "expr": "(1 - sum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\",code!~\"5..|0\",path!=\"/health\"}[1h]))\n/\nsum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\",path!=\"/health\"}[1h]))) / (1 - 0.99)",
+              "hide": false,
+              "instant": false,
+              "legendFormat": "Burn Rate - 1h",
+              "range": true,
+              "refId": "B"
+            }
+          ],
+          "title": "2% consumption - Critical Burn Rate Alert (5m & 1h)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDD8BE47D10408F45"
+          },
+          "description": "Page if the burn rate over the last 30 minutes and last 6 hours remains at 5.6 or greater for at least 5 minutes without restoration.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "axisSoftMax": 7,
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "dashed+area"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 5.6
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 5,
+            "x": 9,
+            "y": 6
+          },
+          "id": 18,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PDD8BE47D10408F45"
+              },
+              "editorMode": "code",
+              "expr": "(1 - sum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\",code!~\"5..|0\",path!=\"/health\"}[30m]))\n/\nsum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\",path!=\"/health\"}[30m]))) / (1 - 0.99)",
+              "instant": false,
+              "legendFormat": "Burn Rate - 30m",
+              "range": true,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PDD8BE47D10408F45"
+              },
+              "editorMode": "code",
+              "expr": "(1 - sum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\",code!~\"5..|0\",path!=\"/health\"}[6h]))\n/\nsum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\",path!=\"/health\"}[6h]))) / (1 - 0.99)",
+              "hide": false,
+              "instant": false,
+              "legendFormat": "Burn Rate - 6h",
+              "range": true,
+              "refId": "B"
+            }
+          ],
+          "title": "5% consumption - Critical Burn Rate Alert (30m & 6h)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDD8BE47D10408F45"
+          },
+          "description": "Send a warning notification if the burn rate over the last 2 hours and last 1 day remains at 2.8 or greater for at least 15 minutes without restoration.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "axisSoftMax": 3.5,
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "dashed+area"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 2.8
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 5,
+            "x": 14,
+            "y": 6
+          },
+          "id": 19,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PDD8BE47D10408F45"
+              },
+              "editorMode": "code",
+              "expr": "(1 - sum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\",code!~\"5..|0\",path!=\"/health\"}[2h]))\n/\nsum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\",path!=\"/health\"}[2h]))) / (1 - 0.99)",
+              "instant": false,
+              "legendFormat": "Burn Rate - 2h",
+              "range": true,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PDD8BE47D10408F45"
+              },
+              "editorMode": "code",
+              "expr": "(1 - sum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\",code!~\"5..|0\",path!=\"/health\"}[1d]))\n/\nsum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\",path!=\"/health\"}[1d]))) / (1 - 0.99)",
+              "hide": false,
+              "instant": false,
+              "legendFormat": "Burn Rate - 1d",
+              "range": true,
+              "refId": "B"
+            }
+          ],
+          "title": "10% consumption - Critical Burn Rate Alert (2h & 1d)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDD8BE47D10408F45"
+          },
+          "description": "Send a warning notification if the burn rate over the last 6 hours and last 3 days remains at 0.934 or greater for at least 15 minutes without restoration.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "axisSoftMax": 1.16,
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "dashed+area"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 0.934
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 5,
+            "x": 19,
+            "y": 6
+          },
+          "id": 20,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PDD8BE47D10408F45"
+              },
+              "editorMode": "code",
+              "expr": "(1 - sum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\",code!~\"5..|0\",path!=\"/health\"}[6h]))\n/\nsum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\",path!=\"/health\"}[6h]))) / (1 - 0.99)",
+              "instant": false,
+              "legendFormat": "Burn Rate - 6h",
+              "range": true,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PDD8BE47D10408F45"
+              },
+              "editorMode": "code",
+              "expr": "(1 - sum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\",code!~\"5..|0\",path!=\"/health\"}[3d]))\n/\nsum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\",path!=\"/health\"}[3d]))) / (1 - 0.99)",
+              "hide": false,
+              "instant": false,
+              "legendFormat": "Burn Rate - 3d",
+              "range": true,
+              "refId": "B"
+            }
+          ],
+          "title": "10% consumption - Critical Burn Rate Alert (6h & 3d)",
+          "type": "timeseries"
+        },
+        {
+          "collapsed": false,
+          "gridPos": {
+            "h": 1,
+            "w": 24,
+            "x": 0,
+            "y": 33
+          },
+          "id": 14,
+          "panels": [],
+          "repeat": "exported_service",
+          "repeatDirection": "h",
+          "title": "${exported_service} API latency",
+          "type": "row"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PD776AFABBE26000A"
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 4,
+            "x": 0,
+            "y": 34
+          },
+          "id": 21,
+          "options": {
+            "code": {
+              "language": "plaintext",
+              "showLineNumbers": false,
+              "showMiniMap": false
+            },
+            "content": "SLO Definition\n\nOver a 28-day rolling window, 99% of successful requests (defined as those receiving a non-5xx HTTP response) to ${exported_service}} APIs must complete within 1 second",
+            "mode": "markdown"
+          },
+          "pluginVersion": "10.4.1",
+          "title": "${exported_service} Latency",
+          "type": "text"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDD8BE47D10408F45"
+          },
+          "description": "Percentage of requests of API server are successful with a latency of < 1000ms",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 0.99
+                  }
+                ]
+              },
+              "unit": "percentunit"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 7,
+            "x": 4,
+            "y": 34
+          },
+          "id": 5,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": true,
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "10.4.1",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PDD8BE47D10408F45"
+              },
+              "editorMode": "code",
+              "expr": "sum(rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\", code!~\"5..|0\",le=\"1000\"}[$__range]))\n/\nsum(rate(chi_request_duration_milliseconds_count{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\", code!~\"5..|0\"}[$__range]))",
+              "instant": false,
+              "legendFormat": "__auto",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "Latency (< 1s)",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDD8BE47D10408F45"
+          },
+          "description": "An error budget is the maximum amount errors that a technical system can fail without ",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "decimals": 2,
+              "mappings": [],
+              "max": 1,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 0.8
+                  }
+                ]
+              },
+              "unit": "percentunit"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 7,
+            "x": 11,
+            "y": 34
+          },
+          "id": 11,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "10.4.1",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PDD8BE47D10408F45"
+              },
+              "editorMode": "code",
+              "expr": "(1 - sum(rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\", code!~\"5..|0\",le=\"1000\"}[$__range]))\n/\nsum(rate(chi_request_duration_milliseconds_count{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\", code!~\"5..|0\"}[$__range])))\n/\n(1 - 0.99)",
+              "instant": false,
+              "legendFormat": "Error budget burn rate",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "Latency burning rate 99%",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDD8BE47D10408F45"
+          },
+          "description": "An error budget is the maximum amount errors that a technical system can fail without ",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "mappings": [],
+              "max": 1,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 0.8
+                  }
+                ]
+              },
+              "unit": "percentunit"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 18,
+            "y": 34
+          },
+          "id": 22,
+          "options": {
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto"
+          },
+          "pluginVersion": "10.4.1",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PDD8BE47D10408F45"
+              },
+              "editorMode": "code",
+              "expr": "(1 - sum(rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\", code!~\"5..|0\",le=\"1000\"}[$__range]))\n/\nsum(rate(chi_request_duration_milliseconds_count{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\", code!~\"5..|0\"}[$__range])))\n/\n(1 - 0.99)",
+              "instant": false,
+              "legendFormat": "__auto",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "Error Budget Exhaustion 99%",
+          "type": "gauge"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDD8BE47D10408F45"
+          },
+          "description": "Page if the burn rate over the last 5 minutes and last 1 hour remains at 13.44 or greater for at least 5 minutes without restoration.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "axisSoftMax": 16.8,
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "dashed+area"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 13.44
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 5,
+            "x": 4,
+            "y": 39
+          },
+          "id": 24,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PDD8BE47D10408F45"
+              },
+              "editorMode": "code",
+              "expr": "(1 - sum(rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\", code!~\"5..|0\",le=\"1000\"}[5m]))\n/\nsum(rate(chi_request_duration_milliseconds_count{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\", code!~\"5..|0\"}[5m]))) / (1 - 0.99)",
+              "instant": false,
+              "legendFormat": "Burn Rate - 5m",
+              "range": true,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PDD8BE47D10408F45"
+              },
+              "editorMode": "code",
+              "expr": "(1 - sum(rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\", code!~\"5..|0\",le=\"1000\"}[1h]))\n/\nsum(rate(chi_request_duration_milliseconds_count{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\", code!~\"5..|0\"}[1h]))) / (1 - 0.99)",
+              "hide": false,
+              "instant": false,
+              "legendFormat": "Burn Rate - 1h",
+              "range": true,
+              "refId": "B"
+            }
+          ],
+          "title": "Critical Burn Rate Alert (5m & 1h)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDD8BE47D10408F45"
+          },
+          "description": "Send a warning notification if the burn rate over the last 2 hours and last 1 day remains at 2.8 or greater for at least 15 minutes without restoration.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "axisSoftMax": 3.5,
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "dashed+area"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 2.8
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 5,
+            "x": 9,
+            "y": 39
+          },
+          "id": 25,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PDD8BE47D10408F45"
+              },
+              "editorMode": "code",
+              "expr": "(1 - sum(rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\", code!~\"5..|0\",le=\"1000\"}[2h]))\n/\nsum(rate(chi_request_duration_milliseconds_count{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\", code!~\"5..|0\"}[2h]))) / (1 - 0.99)",
+              "instant": false,
+              "legendFormat": "Burn Rate - 2h",
+              "range": true,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PDD8BE47D10408F45"
+              },
+              "editorMode": "code",
+              "expr": "(1 - sum(rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\", code!~\"5..|0\",le=\"1000\"}[1d]))\n/\nsum(rate(chi_request_duration_milliseconds_count{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\", code!~\"5..|0\"}[1d]))) / (1 - 0.99)",
+              "hide": false,
+              "instant": false,
+              "legendFormat": "Burn Rate - 1d",
+              "range": true,
+              "refId": "B"
+            }
+          ],
+          "title": "Critical Burn Rate Alert (2h & 1d)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDD8BE47D10408F45"
+          },
+          "description": "Send a warning notification if the burn rate over the last 6 hours and last 3 days remains at 0.934 or greater for at least 15 minutes without restoration.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "axisSoftMax": 1.16,
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "dashed+area"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 0.934
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 5,
+            "x": 14,
+            "y": 39
+          },
+          "id": 26,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PDD8BE47D10408F45"
+              },
+              "editorMode": "code",
+              "expr": "(1 - sum(rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\", code!~\"5..|0\",le=\"1000\"}[6h]))\n/\nsum(rate(chi_request_duration_milliseconds_count{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\", code!~\"5..|0\"}[6h]))) / (1 - 0.99)",
+              "instant": false,
+              "legendFormat": "Burn Rate - 6h",
+              "range": true,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PDD8BE47D10408F45"
+              },
+              "editorMode": "code",
+              "expr": "(1 - sum(rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\", code!~\"5..|0\",le=\"1000\"}[3d]))\n/\nsum(rate(chi_request_duration_milliseconds_count{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\", code!~\"5..|0\"}[3d]))) / (1 - 0.99)",
+              "hide": false,
+              "instant": false,
+              "legendFormat": "Burn Rate - 3d",
+              "range": true,
+              "refId": "B"
+            }
+          ],
+          "title": "Critical Burn Rate Alert (6h & 3h)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PDD8BE47D10408F45"
+          },
+          "description": "Page if the burn rate over the last 30 minutes and last 6 hours remains at 5.6 or greater for at least 5 minutes without restoration.",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "axisSoftMax": 7,
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "dashed+area"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 5.6
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 5,
+            "x": 19,
+            "y": 39
+          },
+          "id": 27,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PDD8BE47D10408F45"
+              },
+              "editorMode": "code",
+              "expr": "(1 - sum(rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\", code!~\"5..|0\",le=\"1000\"}[30m]))\n/\nsum(rate(chi_request_duration_milliseconds_count{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\", code!~\"5..|0\"}[30m]))) / (1 - 0.99)",
+              "instant": false,
+              "legendFormat": "Burn Rate - 30m",
+              "range": true,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PDD8BE47D10408F45"
+              },
+              "editorMode": "code",
+              "expr": "(1 - sum(rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\", code!~\"5..|0\",le=\"1000\"}[6h]))\n/\nsum(rate(chi_request_duration_milliseconds_count{service=\"migration-planner-metrics\",exported_service=\"${exported_service}\", code!~\"5..|0\"}[6h]))) / (1 - 0.99)",
+              "hide": false,
+              "instant": false,
+              "legendFormat": "Burn Rate - 6h",
+              "range": true,
+              "refId": "B"
+            }
+          ],
+          "title": "Critical Burn Rate Alert (30m & 6h)",
+          "type": "timeseries"
+        }
+      ],
+      "refresh": "5s",
+      "schemaVersion": 39,
+      "tags": [],
+      "templating": {
+        "list": [
+          {
+            "allValue": "",
+            "current": {
+              "selected": true,
+              "text": [
+                "api_server",
+                "agent_server",
+                "image_server"
+              ],
+              "value": [
+                "api_server",
+                "agent_server",
+                "image_server"
+              ]
+            },
+            "hide": 0,
+            "includeAll": true,
+            "multi": true,
+            "name": "exported_service",
+            "options": [
+              {
+                "selected": false,
+                "text": "All",
+                "value": "$__all"
+              },
+              {
+                "selected": true,
+                "text": "api_server",
+                "value": "api_server"
+              },
+              {
+                "selected": true,
+                "text": "agent_server",
+                "value": "agent_server"
+              },
+              {
+                "selected": true,
+                "text": "image_server",
+                "value": "image_server"
+              }
+            ],
+            "query": "api_server,agent_server,image_server",
+            "queryValue": "",
+            "skipUrlSync": false,
+            "type": "custom"
+          }
+        ]
+      },
+      "time": {
+        "from": "now-28h",
+        "to": "now"
+      },
+      "timepicker": {},
+      "timezone": "",
+      "title": "Assisted Migrations SLOs",
+      "uid": "eei5pe6ednev4e",
+      "version": 1,
+      "weekStart": ""
+    }
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: grafana-dashboard-slo
+  labels:
+    grafana_dashboard: "true"
+  annotations:
+    grafana-folder: /grafana-dashboard-definitions/assisted-migrations
