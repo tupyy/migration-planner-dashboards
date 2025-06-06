@@ -1388,7 +1388,7 @@ data:
             "query": "prometheus",
             "queryValue": "",
             "refresh": 1,
-            "regex": "/crcs02ue1-prometheus/",
+            "regex": "crcs02ue1-prometheus|crcp01ue1-prometheus",
             "skipUrlSync": false,
             "type": "datasource"
           },
