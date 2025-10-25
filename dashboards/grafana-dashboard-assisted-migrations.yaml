@@ -1,6 +1,6 @@
 apiVersion: v1
 data:
-  am.json: |-
+  am.json: |
     {
       "annotations": {
         "list": [
@@ -21,6 +21,7 @@ data:
       "editable": true,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
+      "id": 1203338,
       "links": [],
       "panels": [
         {
@@ -66,8 +67,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "orange",
-                    "value": null
+                    "color": "orange"
                   },
                   {
                     "color": "orange",
@@ -108,7 +108,7 @@ data:
             "showThresholdMarkers": true,
             "sizing": "auto"
           },
-          "pluginVersion": "10.4.1",
+          "pluginVersion": "11.6.3",
           "targets": [
             {
               "datasource": {
@@ -116,7 +116,7 @@ data:
                 "uid": "PDD8BE47D10408F45"
               },
               "editorMode": "code",
-              "expr": "sum(up{namespace=\"assisted-migration-stage\",service=\"migration-planner-metrics\"}) -0",
+              "expr": "sum(up{namespace=\"$namespace\",service=\"migration-planner-metrics\"}) -0",
               "instant": false,
               "legendFormat": "pods",
               "range": true,
@@ -144,8 +144,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "#EAB839",
@@ -182,9 +181,12 @@ data:
             "showThresholdLabels": false,
             "showThresholdMarkers": true,
             "sizing": "auto",
-            "text": {}
+            "text": {
+              "titleSize": 15,
+              "valueSize": 20
+            }
           },
-          "pluginVersion": "10.4.1",
+          "pluginVersion": "11.6.3",
           "targets": [
             {
               "datasource": {
@@ -193,7 +195,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "label_replace(sum(rate(container_cpu_usage_seconds_total{namespace=\"assisted-migration-stage\"}[5m])) by (pod) / sum(kube_pod_container_resource_limits{namespace=\"assisted-migration-stage\", resource=\"cpu\"}) by (pod),\"pod\",\"pod-$1\",\"pod\", \"migration-planner-(.*)\")",
+              "expr": "label_replace(sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\"}[5m])) by (pod) / sum(kube_pod_container_resource_limits{namespace=\"$namespace\", resource=\"cpu\"}) by (pod),\"pod\",\"pod-$1\",\"pod\", \"migration-planner-(.*)\")",
               "instant": true,
               "legendFormat": "{{pod}}",
               "range": false,
@@ -220,8 +222,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "#EAB839",
@@ -257,9 +258,13 @@ data:
             },
             "showThresholdLabels": false,
             "showThresholdMarkers": true,
-            "sizing": "auto"
+            "sizing": "auto",
+            "text": {
+              "titleSize": 15,
+              "valueSize": 20
+            }
           },
-          "pluginVersion": "10.4.1",
+          "pluginVersion": "11.6.3",
           "targets": [
             {
               "datasource": {
@@ -268,7 +273,7 @@ data:
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "label_replace(sum(container_memory_working_set_bytes{namespace=\"assisted-migration-stage\", pod=~\"migration-planner-(.*)\"}) by (pod) / sum(kube_pod_container_resource_limits{resource=\"memory\", namespace=\"assisted-migration-stage\"}) by (pod),\"pod\",\"pod-$1\",\"pod\",\"migration-planner-(.*)\")",
+              "expr": "label_replace(sum(container_memory_working_set_bytes{namespace=\"$namespace\", pod=~\"migration-planner-(.*)\"}) by (pod) / sum(kube_pod_container_resource_limits{resource=\"memory\", namespace=\"$namespace\"}) by (pod),\"pod\",\"pod-$1\",\"pod\",\"migration-planner-(.*)\")",
               "instant": true,
               "legendFormat": "__auto",
               "range": false,
@@ -310,8 +315,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -347,7 +351,7 @@ data:
             "textMode": "auto",
             "wideLayout": true
           },
-          "pluginVersion": "10.4.1",
+          "pluginVersion": "11.6.3",
           "targets": [
             {
               "datasource": {
@@ -382,6 +386,7 @@ data:
                 "axisLabel": "",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
+                "barWidthFactor": 0.6,
                 "drawStyle": "line",
                 "fillOpacity": 4,
                 "gradientMode": "none",
@@ -413,8 +418,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -441,11 +445,12 @@ data:
               "showLegend": true
             },
             "tooltip": {
+              "hideZeros": false,
               "mode": "single",
               "sort": "none"
             }
           },
-          "pluginVersion": "11.4.0",
+          "pluginVersion": "11.6.3",
           "targets": [
             {
               "datasource": {
@@ -453,7 +458,7 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
-              "expr": "sum by (code) (rate(chi_requests_total{service=\"migration-planner-metrics\",path!~\"/health\"}[$__range]))",
+              "expr": "sum by (code) (rate(chi_requests_total{service=\"migration-planner-metrics\",path!~\"/health\",exported_service=\"api_server\"}[$__rate_interval]))",
               "legendFormat": "{{code}}",
               "range": true,
               "refId": "A"
@@ -480,6 +485,7 @@ data:
                 "axisLabel": "",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
+                "barWidthFactor": 0.6,
                 "drawStyle": "line",
                 "fillOpacity": 4,
                 "gradientMode": "none",
@@ -510,8 +516,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -537,11 +542,12 @@ data:
               "showLegend": true
             },
             "tooltip": {
+              "hideZeros": false,
               "mode": "single",
               "sort": "none"
             }
           },
-          "pluginVersion": "11.4.0",
+          "pluginVersion": "11.6.3",
           "targets": [
             {
               "datasource": {
@@ -549,7 +555,7 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
-              "expr": "sum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"api_server\", code!~\"2..\"}[$__range])) / sum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"api_server\"}[$__range]))",
+              "expr": "sum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"api_server\", code!~\"2..\"}[$__rate_interval])) / sum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"api_server\"}[$__rate_interval]))",
               "legendFormat": "non 2xx",
               "range": true,
               "refId": "A"
@@ -560,7 +566,7 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
-              "expr": "sum(rate(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"api_server\",code=~\"5.0\"}[$__range])) / sum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"api_server\"}[$__range]))",
+              "expr": "sum(rate(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"api_server\",code=~\"5.0\"}[$__rate_interval])) / sum(rate(chi_requests_total{service=\"migration-planner-metrics\",exported_service=\"api_server\"}[$__rate_interval]))",
               "hide": false,
               "instant": false,
               "legendFormat": "5xx",
@@ -589,6 +595,7 @@ data:
                 "axisLabel": "",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
+                "barWidthFactor": 0.6,
                 "drawStyle": "line",
                 "fillOpacity": 4,
                 "gradientMode": "none",
@@ -619,8 +626,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -647,11 +653,12 @@ data:
               "showLegend": true
             },
             "tooltip": {
+              "hideZeros": false,
               "mode": "multi",
               "sort": "desc"
             }
           },
-          "pluginVersion": "11.4.0",
+          "pluginVersion": "11.6.3",
           "targets": [
             {
               "datasource": {
@@ -659,7 +666,7 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
-              "expr": "histogram_quantile(0.99, sum by (le) (rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\", exported_service=\"api_server\",code!~\"5..|0\"}[5m])))",
+              "expr": "histogram_quantile(0.99, sum by (le) (rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\", exported_service=\"api_server\",code!~\"5..|0\"}[$__rate_interval])))",
               "legendFormat": "99th",
               "range": true,
               "refId": "A"
@@ -670,7 +677,7 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
-              "expr": "histogram_quantile(0.90, sum by (le) (rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\",exported_service=\"api_server\", code!~\"5..|0\"}[5m])))",
+              "expr": "histogram_quantile(0.90, sum by (le) (rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\",exported_service=\"api_server\", code!~\"5..|0\"}[$__rate_interval])))",
               "hide": false,
               "instant": false,
               "legendFormat": "90th",
@@ -683,7 +690,7 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
-              "expr": "histogram_quantile(0.50, sum by (le) (rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\",exported_service=\"api_server\", code!~\"5..|0\"}[5m])))",
+              "expr": "histogram_quantile(0.50, sum by (le) (rate(chi_request_duration_milliseconds_bucket{service=\"migration-planner-metrics\",exported_service=\"api_server\", code!~\"5..|0\"}[$__rate_interval])))",
               "hide": false,
               "instant": false,
               "legendFormat": "50th",
@@ -713,8 +720,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -750,7 +756,7 @@ data:
             "textMode": "auto",
             "wideLayout": true
           },
-          "pluginVersion": "10.4.1",
+          "pluginVersion": "11.6.3",
           "targets": [
             {
               "datasource": {
@@ -799,8 +805,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -836,7 +841,7 @@ data:
             "textMode": "auto",
             "wideLayout": true
           },
-          "pluginVersion": "10.4.1",
+          "pluginVersion": "11.6.3",
           "targets": [
             {
               "datasource": {
@@ -871,6 +876,7 @@ data:
                 "axisLabel": "",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
+                "barWidthFactor": 0.6,
                 "drawStyle": "line",
                 "fillOpacity": 4,
                 "gradientMode": "none",
@@ -902,8 +908,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -930,11 +935,12 @@ data:
               "showLegend": true
             },
             "tooltip": {
+              "hideZeros": false,
               "mode": "multi",
               "sort": "none"
             }
           },
-          "pluginVersion": "11.4.0",
+          "pluginVersion": "11.6.3",
           "targets": [
             {
               "datasource": {
@@ -942,7 +948,7 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
-              "expr": "sum by (code) (rate(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"agent_server\",path!~\"/health\"}[$__range]))",
+              "expr": "sum by (code) (rate(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"agent_server\",path!~\"/health\"}[$__rate_interval]))",
               "legendFormat": "{{code}}",
               "range": true,
               "refId": "A"
@@ -969,6 +975,7 @@ data:
                 "axisLabel": "",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
+                "barWidthFactor": 0.6,
                 "drawStyle": "line",
                 "fillOpacity": 4,
                 "gradientMode": "none",
@@ -999,8 +1006,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1026,11 +1032,12 @@ data:
               "showLegend": true
             },
             "tooltip": {
+              "hideZeros": false,
               "mode": "single",
               "sort": "none"
             }
           },
-          "pluginVersion": "11.4.0",
+          "pluginVersion": "11.6.3",
           "targets": [
             {
               "datasource": {
@@ -1038,7 +1045,7 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
-              "expr": "sum(rate(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"agent_server\",path!~\"/health\", code!~\"2..\"}[$__range])) / sum(rate(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"agent_server\",path!~\"/health\"}[$__range]))",
+              "expr": "sum(rate(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"agent_server\",path!~\"/health\", code!~\"2..\"}[$__rate_interval])) / sum(rate(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"agent_server\",path!~\"/health\"}[$__rate_interval]))",
               "legendFormat": "non 2xx",
               "range": true,
               "refId": "A"
@@ -1049,7 +1056,7 @@ data:
                 "uid": "${Datasource}"
               },
               "editorMode": "code",
-              "expr": "sum(rate(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"agent_server\",path!~\"/health\", code=~\"5..0\"}[$__range])) / sum(rate(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"agent_server\",path!~\"/health\"}[$__range]))",
+              "expr": "sum(rate(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"agent_server\",path!~\"/health\", code=~\"5..0\"}[$__rate_interval])) / sum(rate(chi_requests_total{service=\"migration-planner-metrics\", exported_service=\"agent_server\",path!~\"/health\"}[$__rate_interval]))",
               "hide": false,
               "instant": false,
               "legendFormat": "5xx",
@@ -1078,6 +1085,7 @@ data:
                 "axisLabel": "",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
+                "barWidthFactor": 0.6,
                 "drawStyle": "line",
                 "fillOpacity": 4,
                 "gradientMode": "none",
@@ -1108,8 +1116,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1136,11 +1143,12 @@ data:
               "showLegend": true
             },
             "tooltip": {
+              "hideZeros": false,
               "mode": "multi",
               "sort": "desc"
             }
           },
-          "pluginVersion": "11.4.0",
+          "pluginVersion": "11.6.3",
           "targets": [
             {
               "datasource": {
@@ -1202,8 +1210,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1239,7 +1246,7 @@ data:
             "textMode": "auto",
             "wideLayout": true
           },
-          "pluginVersion": "10.4.1",
+          "pluginVersion": "11.6.3",
           "targets": [
             {
               "datasource": {
@@ -1285,8 +1292,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1321,7 +1327,7 @@ data:
             "textMode": "auto",
             "wideLayout": true
           },
-          "pluginVersion": "10.4.1",
+          "pluginVersion": "11.6.3",
           "targets": [
             {
               "datasource": {
@@ -1354,8 +1360,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1393,7 +1398,7 @@ data:
             "textMode": "auto",
             "wideLayout": true
           },
-          "pluginVersion": "10.4.1",
+          "pluginVersion": "11.6.3",
           "targets": [
             {
               "datasource": {
@@ -1427,6 +1432,7 @@ data:
                 "axisLabel": "",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
+                "barWidthFactor": 0.6,
                 "drawStyle": "line",
                 "fillOpacity": 3,
                 "gradientMode": "none",
@@ -1457,8 +1463,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1484,11 +1489,12 @@ data:
               "showLegend": true
             },
             "tooltip": {
+              "hideZeros": false,
               "mode": "multi",
               "sort": "desc"
             }
           },
-          "pluginVersion": "11.4.0",
+          "pluginVersion": "11.6.3",
           "targets": [
             {
               "datasource": {
@@ -1521,8 +1527,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1557,7 +1562,7 @@ data:
             "textMode": "auto",
             "wideLayout": true
           },
-          "pluginVersion": "10.4.1",
+          "pluginVersion": "11.6.3",
           "targets": [
             {
               "datasource": {
@@ -1590,8 +1595,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1626,7 +1630,7 @@ data:
             "textMode": "auto",
             "wideLayout": true
           },
-          "pluginVersion": "10.4.1",
+          "pluginVersion": "11.6.3",
           "targets": [
             {
               "datasource": {
@@ -1673,6 +1677,7 @@ data:
                 "axisLabel": "",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
+                "barWidthFactor": 0.6,
                 "drawStyle": "line",
                 "fillOpacity": 5,
                 "gradientMode": "none",
@@ -1704,8 +1709,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1735,10 +1739,12 @@ data:
               "showLegend": true
             },
             "tooltip": {
+              "hideZeros": false,
               "mode": "multi",
               "sort": "none"
             }
           },
+          "pluginVersion": "11.6.3",
           "targets": [
             {
               "datasource": {
@@ -1746,7 +1752,7 @@ data:
                 "uid": "PDD8BE47D10408F45"
               },
               "editorMode": "code",
-              "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"assisted-migration-stage\"}[5m])) by (pod) / sum(kube_pod_container_resource_limits{namespace=\"assisted-migration-stage\", resource=\"cpu\"}) by (pod)",
+              "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\"}[$__rate_interval])) by (pod) / sum(kube_pod_container_resource_limits{namespace=\"$namespace\", resource=\"cpu\"}) by (pod)",
               "instant": false,
               "legendFormat": "__auto",
               "range": true,
@@ -1773,6 +1779,7 @@ data:
                 "axisLabel": "",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
+                "barWidthFactor": 0.6,
                 "drawStyle": "line",
                 "fillOpacity": 5,
                 "gradientMode": "none",
@@ -1803,8 +1810,7 @@ data:
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1834,10 +1840,12 @@ data:
               "showLegend": true
             },
             "tooltip": {
+              "hideZeros": false,
               "mode": "single",
               "sort": "none"
             }
           },
+          "pluginVersion": "11.6.3",
           "targets": [
             {
               "datasource": {
@@ -1845,7 +1853,7 @@ data:
                 "uid": "PDD8BE47D10408F45"
               },
               "editorMode": "code",
-              "expr": "sum(avg_over_time(container_memory_working_set_bytes{namespace=\"assisted-migration-stage\", pod=~\"migration-planner.*\"}[10m])) by (pod) / sum(kube_pod_container_resource_limits{resource=\"memory\", namespace=\"assisted-migration-stage\"}) by (pod)",
+              "expr": "sum(avg_over_time(container_memory_working_set_bytes{namespace=\"$namespace\", pod=~\"migration-planner.*\"}[$__rate_interval])) by (pod) / sum(kube_pod_container_resource_limits{resource=\"memory\", namespace=\"$namespace\"}) by (pod)",
               "instant": false,
               "legendFormat": "__auto",
               "range": true,
@@ -1856,29 +1864,49 @@ data:
           "type": "timeseries"
         }
       ],
+      "preload": false,
       "refresh": "30s",
-      "schemaVersion": 39,
+      "schemaVersion": 41,
       "tags": [],
       "templating": {
         "list": [
           {
             "current": {
-              "selected": false,
-              "text": "crcs02ue1-prometheus",
-              "value": "PDD8BE47D10408F45"
+              "text": "crcp01ue1-prometheus",
+              "value": "PC1EAC84DCBBF0697"
             },
-            "hide": 0,
             "includeAll": false,
             "label": "Datasource",
-            "multi": false,
             "name": "Datasource",
             "options": [],
             "query": "prometheus",
-            "queryValue": "",
             "refresh": 1,
             "regex": "crcs02ue1-prometheus|crcp01ue1-prometheus",
             "skipUrlSync": false,
             "type": "datasource"
+          },
+          {
+            "allowCustomValue": false,
+            "current": {
+              "text": "assisted-migration-production",
+              "value": "assisted-migration-production"
+            },
+            "label": "Namespace",
+            "name": "namespace",
+            "options": [
+              {
+                "selected": false,
+                "text": "assisted-migration-stage",
+                "value": "assisted-migration-stage"
+              },
+              {
+                "selected": true,
+                "text": "assisted-migration-production",
+                "value": "assisted-migration-production"
+              }
+            ],
+            "query": "assisted-migration-stage,assisted-migration-production",
+            "type": "custom"
           }
         ]
       },
@@ -1890,8 +1918,7 @@ data:
       "timezone": "browser",
       "title": "Assisted Migrations",
       "uid": "assisted-migrations-backend-id",
-      "version": 10,
-      "weekStart": ""
+      "version": 1
     }
 kind: ConfigMap
 metadata:
